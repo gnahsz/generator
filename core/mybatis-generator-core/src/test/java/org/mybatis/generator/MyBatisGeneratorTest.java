@@ -17,6 +17,8 @@ package org.mybatis.generator;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +31,7 @@ import org.mybatis.generator.config.JDBCConnectionConfiguration;
 import org.mybatis.generator.config.ModelType;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.exception.InvalidConfigurationException;
+import org.mybatis.generator.exception.XMLParserException;
 import org.mybatis.generator.internal.DefaultShellCallback;
 
 public class MyBatisGeneratorTest {
@@ -106,4 +109,16 @@ public class MyBatisGeneratorTest {
             throw e;
         }
     }
+    @Test
+    public void test() throws Exception {
+        List<String> warnings = new ArrayList<String>();
+        boolean overwrite = true;
+        File configFile = new File("/Users/gnahs/IdeaProjects/github/mybatis-generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/api/generatorConfig.xml");
+        ConfigurationParser cp = new ConfigurationParser(warnings);
+        Configuration config = cp.parseConfiguration(configFile);
+        DefaultShellCallback callback = new DefaultShellCallback(overwrite);
+        MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
+        myBatisGenerator.generate(null);
+    }
+
 }

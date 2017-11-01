@@ -38,9 +38,9 @@ import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.RootClassInfo;
 
 /**
- * 
+ *
  * @author Jeff Butler
- * 
+ *
  */
 public class SimpleModelGenerator extends AbstractJavaGenerator {
 
@@ -56,7 +56,7 @@ public class SimpleModelGenerator extends AbstractJavaGenerator {
         CommentGenerator commentGenerator = context.getCommentGenerator();
 
         FullyQualifiedJavaType type = new FullyQualifiedJavaType(
-                introspectedTable.getBaseRecordType());
+            introspectedTable.getBaseRecordType());
         TopLevelClass topLevelClass = new TopLevelClass(type);
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);
         commentGenerator.addJavaFileComment(topLevelClass);
@@ -82,30 +82,30 @@ public class SimpleModelGenerator extends AbstractJavaGenerator {
         String rootClass = getRootClass();
         for (IntrospectedColumn introspectedColumn : introspectedColumns) {
             if (RootClassInfo.getInstance(rootClass, warnings)
-                    .containsProperty(introspectedColumn)) {
+                .containsProperty(introspectedColumn)) {
                 continue;
             }
 
             Field field = getJavaBeansField(introspectedColumn, context, introspectedTable);
             if (plugins.modelFieldGenerated(field, topLevelClass,
-                    introspectedColumn, introspectedTable,
-                    Plugin.ModelClassType.BASE_RECORD)) {
+                introspectedColumn, introspectedTable,
+                Plugin.ModelClassType.BASE_RECORD)) {
                 topLevelClass.addField(field);
                 topLevelClass.addImportedType(field.getType());
             }
 
             Method method = getJavaBeansGetter(introspectedColumn, context, introspectedTable);
             if (plugins.modelGetterMethodGenerated(method, topLevelClass,
-                    introspectedColumn, introspectedTable,
-                    Plugin.ModelClassType.BASE_RECORD)) {
+                introspectedColumn, introspectedTable,
+                Plugin.ModelClassType.BASE_RECORD)) {
                 topLevelClass.addMethod(method);
             }
 
             if (!introspectedTable.isImmutable()) {
                 method = getJavaBeansSetter(introspectedColumn, context, introspectedTable);
                 if (plugins.modelSetterMethodGenerated(method, topLevelClass,
-                        introspectedColumn, introspectedTable,
-                        Plugin.ModelClassType.BASE_RECORD)) {
+                    introspectedColumn, introspectedTable,
+                    Plugin.ModelClassType.BASE_RECORD)) {
                     topLevelClass.addMethod(method);
                 }
             }
@@ -113,7 +113,7 @@ public class SimpleModelGenerator extends AbstractJavaGenerator {
 
         List<CompilationUnit> answer = new ArrayList<CompilationUnit>();
         if (context.getPlugins().modelBaseRecordClassGenerated(topLevelClass,
-                introspectedTable)) {
+            introspectedTable)) {
             answer.add(topLevelClass);
         }
         return answer;
@@ -137,15 +137,15 @@ public class SimpleModelGenerator extends AbstractJavaGenerator {
         method.setConstructor(true);
         method.setName(topLevelClass.getType().getShortName());
         context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+            introspectedTable);
 
         List<IntrospectedColumn> constructorColumns = introspectedTable
-                .getAllColumns();
+            .getAllColumns();
 
         for (IntrospectedColumn introspectedColumn : constructorColumns) {
             method.addParameter(new Parameter(introspectedColumn
-                    .getFullyQualifiedJavaType(), introspectedColumn
-                    .getJavaProperty()));
+                .getFullyQualifiedJavaType(), introspectedColumn
+                .getJavaProperty()));
         }
 
         StringBuilder sb = new StringBuilder();
@@ -153,7 +153,7 @@ public class SimpleModelGenerator extends AbstractJavaGenerator {
             boolean comma = false;
             sb.append("super("); //$NON-NLS-1$
             for (IntrospectedColumn introspectedColumn : introspectedTable
-                    .getPrimaryKeyColumns()) {
+                .getPrimaryKeyColumns()) {
                 if (comma) {
                     sb.append(", "); //$NON-NLS-1$
                 } else {
